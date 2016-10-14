@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="DemoApp" ng-controller="CarController as ctrl">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <!--        <script src="angular-locale_da.js" type="text/javascript"></script>-->
+        <title ng-bind="ctrl.title"></title>        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+        <link href="style/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="container" ng-app="DemoApp" ng-controller="CarController">
+            <h1 ng-bind="ctrl.title"></h1>
+        </div>
+        <div class="container" ng-app="DemoApp" ng-controller="CarController">
+            <h2>Numbers of cars: {{totalCars}}</h2>
+        </div>
+        <div class="container" ng-app="DemoApp" ng-controller="carController"> 
+            <table class="table">
+                <tr>
+                    <th>Index</th>
+                    <th ng-click="orderByField = 'year';reverseSort = !reverseSort">Year</th>
+                    <th ng-click="orderByField = 'registered';reverseSort = !reverseSort">Registered</th>
+                    <th ng-click="orderByField = 'fabricator';reverseSort = !reverseSort">Fabricator</th>
+                    <th ng-click="orderByField = 'model';reverseSort = !reverseSort">Model</th>
+                    <th ng-click="orderByField = 'description';reverseSort = !reverseSort">Description</th>
+                    <th ng-click="orderByField = 'price';reverseSort = !reverseSort">Price</th>
+                </tr>
+                <tr ng-repeat="car in ctrl.cars| filter:searchText | orderBy:orderByField:reverseSort">
+                    <td ng-bind="ctrl.cars.indexOf(car) + 1"></td>
+                    <td ng-bind="car.year | date"></td>
+                    <td ng-bind="car.registered"></td>
+                    <td ng-bind="car.make"></td>
+                    <td ng-bind="car.model"></td>
+                    <td ng-bind="car.description"></td>
+                    <td ng-bind="car.price | currency"></td>
+                </tr>        
+            </table>
+        </div>
+        <script>
+                    var myApp = angular.module('DemoApp', []);
+                    myApp.controller('CarController', [function () {
+                            var self = this;
+                            self.cars = [
+                                  {year: 1997, registered: 867621600000, make: 'Ford', model: 'E350', description: 'ac, abs, moon', price: 3000}
+                                , {year: 1999, registered: 945212400000, make: 'Chevy', model: 'Venture', description: 'None', price: 4900}
+                                , {year: 2000, registered: 953766000000, make: 'Chevy', model: 'Venture', description: '', price: 5000}
+                                , {year: 1996, registered: 844380000000, make: 'Jeep', model: 'Grand Cherokee', description: 'Air, moon roof', price: 4799}
+                            ];
+                            self.title = "Cars Demo App";
+                            self.predicate = 'make';
+
+                        }]);
+
+                    var app = angular.module('DemoApp', []);
+                    app.controller('CarController', function ($scope) {
+                        $scope.title = "Nice Title";
+                    });
+                    var car = 4;
+                    var totalApp = angular.module('DemoApp', []);
+                    totalApp.controller('CarController', function ($scope) {
+                        $scope.totalCars = car;
+                    });
+
+        </script>
+    </body>
+</html>
